@@ -26,4 +26,21 @@ function sum(a, b) {
   return a + b;
 }
 
-export default sum;
+function App(props){
+  if(props.lang === 'JS'){
+    return <h1>JS is fav</h1>;
+  }
+  else if(props.lang === 'Python'){
+    return <h1>Python is good</h1>
+  }
+
+  // return(
+  //   <div className="App">
+  //      <button onClick={() => alert('Button displayed')}>Click here</button>
+        
+
+  //   </div>
+  //   );
+}
+
+export default App;
