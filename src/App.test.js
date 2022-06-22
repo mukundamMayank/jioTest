@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
+import userEvent from '@testing-library/user-event'
 
 // test('renders learn react link', () => {
 //   render(<App />);
@@ -11,20 +12,45 @@ import App from './App';
 //   expect(sum(1, 2)).toBe(3);
 // });
 
-// test('test button click',()=>{
-//   render(<App/>);
-//   const alertMock = jest.spyOn(window,'alert').mockImplementation(); 
-//   fireEvent.click(screen.getByText('Click here'));
-//   //expect(screen.getByRole('alert')).toHaveTextContent('Button displayed')
-//   expect(alertMock).toHaveBeenCalledTimes(1);
+test('test button click',()=>{
+  render(<App lang="Python"/>);
+  const alertMock = jest.spyOn(window,'alert').mockImplementation(); 
+  // fireEvent.click(screen.getByText('Click here'));
+  
+  userEvent.click(screen.getByText('Click here'))
+
+  //screen.getByRole('button').toHaveTextContent('Click here')
+
+  //screen.getByTestId('test-id')
+
+  expect(alertMock).toHaveBeenCalledTimes(1);
+  expect(alertMock).toBeCalledWith("Python displayed");
+});
+
+// test('test sending content through props', ()=> {
+// 	render(<App lang="JS"/>);
+
+// 	//by role
+// 	//expect(screen.getByRole('heading')).toHaveTextContent('JS is fav');
+	
+// 	//by test id
+// 	expect(screen.getByTestId('my_test_id')).toHaveTextContent('JS is fav');
 // });
 
-test('test sending content through props', ()=> {
-	render(<App lang="JS"/>);
+test('test the onChange of input',()=>{
+  render(<App lang = "JS" />);
+  const input = screen.getByLabelText("user-name");
+  const greeting = screen.getByTestId("change-input-name");
 
-	//by role
-	//expect(screen.getByRole('heading')).toHaveTextContent('JS is fav');
-	
-	//by test id
-	expect(screen.getByTestId('my_test_id')).toHaveTextContent('JS is fav');
-});
+  expect(input.value).toBe("");
+  expect(greeting.textContent).toBe("Welcome, User!")
+
+  //fireEvent.change(input, { target: { value: "Mayank" }});
+
+  userEvent.type(input, "Mayank");
+  //await userEvent.click()
+  expect(input.value).toBe("Mayank");
+  expect(greeting.textContent).toBe("Welcome, Mayank!");
+})
+
+

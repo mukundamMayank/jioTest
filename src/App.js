@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react';
 
 // function App() {
 //   return (
@@ -43,13 +44,37 @@ import './App.css';
 //     );
 // }
 
+// function App(props){
+//   if(props.lang === 'JS'){
+//      return <p data-testid="my_test_id">JS is fav</p>;
+//    }
+//    else if(props.lang === 'Python'){
+//      return <h1>Python is good</h1>
+//    }
+// }
+
 function App(props){
-  if(props.lang === 'JS'){
-     return <p data-testid="my_test_id">JS is fav</p>;
-   }
-   else if(props.lang === 'Python'){
-     return <h1>Python is good</h1>
-   }
+	const [name, setName] = useState("");
+	if(props.lang === "JS"){
+		return (
+    <div>
+      <span data-testid="change-input-name">
+        Welcome, {name === "" ? "User" : name}!
+      </span>
+      <br />
+      <input 
+        type="text" 
+        aria-label="user-name" 
+        value={name}
+        onChange={e => setName(e.target.value)}
+      />
+    </div>
+  );
+	}
+	else if(props.lang === "Python"){
+		return <button onClick={() => alert('Python displayed')}>Click here</button>
+	}
+
 }
 
 export default App;
